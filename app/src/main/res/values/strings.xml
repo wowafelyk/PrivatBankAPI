@@ -6,11 +6,32 @@
     <string name="text_curency_buy">Купівля</string>
     <string name="text_curency_sale">Продаж</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_nbu_rate">Курс НБУ</string>
     <string name="action_fragment1">Task1</string>
     <string name="action_fragment2">Task2</string>
     <string name="action_fragment3">Task3</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="chart_name">граф</string>
+
+
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_key_graph">Time period</string>
+
+    <string name="pref_title">Виберіть період часу для графа</string>
+
+    <string-array name="pref_graph">
+        <item>Графік за рік</item>
+        <item>Грфік за місяць</item>
+        <item>Графік за тиждень</item>
+    </string-array>
+    <integer-array name="pref_example_list_values">
+        <item>7</item>
+        <item>30</item>
+        <item>30</item>
+    </integer-array>
+
 
 </resources>

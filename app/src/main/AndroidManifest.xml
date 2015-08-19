@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LineChartActivity1"
+            android:label="@string/chart_name">
+        </activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.example.fenix.privatbankapi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class Activity1 extends Activity {
                 newFragment = new Activity1Fragment();
                 transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentcontainer1, newFragment);
-                transaction.addToBackStack(null);
+                //transaction.addToBackStack(null);
                 transaction.commit();
 
                 break;
@@ -48,7 +49,7 @@ public class Activity1 extends Activity {
                 newFragment = new ExchangeFragment();
                 transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentcontainer1, newFragment);
-                transaction.addToBackStack(null);
+                //transaction.addToBackStack(null);
                 transaction.commit();
 
                 break;
@@ -57,10 +58,8 @@ public class Activity1 extends Activity {
                 newFragment = new Chart();
                 transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentcontainer1, newFragment);
-                transaction.addToBackStack(null);
+                //transaction.addToBackStack(null);
                 transaction.commit();
-
-
 
                 break;
 

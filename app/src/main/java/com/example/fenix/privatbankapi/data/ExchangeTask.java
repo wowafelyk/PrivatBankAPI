@@ -99,7 +99,7 @@ public class ExchangeTask extends AsyncTaskLoader<ExchangePerDate> {
 
             //String baseCurrency, String currency, Double saleRateNB, Double purchaseRateNB, Double saleRate, Double purchaseRate
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
+                JSONObject obj = jsonArray.optJSONObject(i);
                 currencyList.add(new Currency(
                         obj.optString("baseCurrency"),
                         obj.optString("currency"),

@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.fenix.privatbankapi.data.Currency;
 import com.example.fenix.privatbankapi.data.CurrentExchangeTask;
+import com.example.fenix.privatbankapi.data.DatePickerFragment;
 import com.example.fenix.privatbankapi.data.ExchangePerDate;
 import com.example.fenix.privatbankapi.data.ExchangeTask;
 
@@ -45,8 +46,9 @@ public class ExchangeFragment extends Fragment implements
     private ListView mListView;
     private CurrentExchangeTask loader;
     static final int LOADER_ID = 2;
-    private final static int REQUEST_CODE = 101;
-    private int mYear, mMonth, mDay;
+    private int mYear=2014;
+    private int mMonth=10;
+    private int mDay=12;
     private TextView mDateView;
     private final static String TEST = "fragment2";
 
@@ -59,9 +61,9 @@ public class ExchangeFragment extends Fragment implements
         setHasOptionsMenu(true);
 
         Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH)+1;
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+        //mYear = c.get(Calendar.YEAR);
+        //mMonth = c.get(Calendar.MONTH)+1;
+        //mDay = c.get(Calendar.DAY_OF_MONTH);
         Log.d(TEST,mDay+"."+mMonth+"."+mYear);
     }
 
@@ -85,14 +87,10 @@ public class ExchangeFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getTitle().equals("Set date")) {
-
-
             DialogFragment newFragment = new DatePickerFragment();
-            newFragment.setTargetFragment(this, REQUEST_CODE);
+            newFragment.setTargetFragment(this, DatePickerFragment.REQUEST_CODE);
             newFragment.show(getFragmentManager(), "datePicker");
-
             getLoaderManager().restartLoader(LOADER_ID, new Bundle(),this).forceLoad();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -107,7 +105,7 @@ public class ExchangeFragment extends Fragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == DatePickerFragment.REQUEST_CODE) {
 
             Bundle b=data.getBundleExtra("bundle");
             mYear=b.getInt("year");
@@ -140,40 +138,11 @@ public class ExchangeFragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<ExchangePerDate> loader) {
-
+        mDateView.setText(mDay+"."+mMonth+"."+mYear);
     }
 
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-            Intent intent = new Intent();
-            Bundle b = new Bundle();
-            b.putInt("year", year);
-            b.putInt("monthOfYear", monthOfYear);
-            b.putInt("dayOfMonth", dayOfMonth);
-            intent.putExtra("bundle",b);
-            getTargetFragment().onActivityResult(
-                    getTargetRequestCode(), REQUEST_CODE, intent);
-
-        }
-    }
 
     public class ListAdapter extends BaseAdapter {
         Context ctx;

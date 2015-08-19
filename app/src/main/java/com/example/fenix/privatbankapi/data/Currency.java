@@ -9,12 +9,12 @@ public class Currency {
     private Double purchaseRate;
 
     public Currency(String baseCurrency, String currency, Double saleRateNB, Double purchaseRateNB, Double saleRate, Double purchaseRate) {
-        this.baseCurrency = baseCurrency;
-        this.currency = currency;
-        this.saleRateNB = saleRateNB;
-        this.purchaseRateNB = purchaseRateNB;
-        this.saleRate = saleRate;
-        this.purchaseRate = purchaseRate;
+        this.baseCurrency = (baseCurrency!=null) ? baseCurrency:"0000";
+        this.currency = currency!=null ? currency:"0000";
+        this.saleRateNB = (saleRateNB!=null) ? saleRateNB:-1;
+        this.purchaseRateNB = (purchaseRateNB!=null) ? purchaseRateNB : -1;
+        this.saleRate = (saleRate!=null) ? saleRate : -1;
+        this.purchaseRate = (purchaseRate!=null) ? purchaseRate : -1;
     }
 
     public String getBaseCurrency() {
