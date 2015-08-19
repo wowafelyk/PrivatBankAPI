@@ -5,4 +5,12 @@
     <string name="text_curency_name">Валюта</string>
     <string name="text_curency_buy">Купівля</string>
     <string name="text_curency_sale">Продаж</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_nbu_rate">Курс НБУ</string>
+    <string name="action_fragment1">Task1</string>
+    <string name="action_fragment2">Task2</string>
+    <string name="action_fragment3">Task3</string>
+
 </resources>

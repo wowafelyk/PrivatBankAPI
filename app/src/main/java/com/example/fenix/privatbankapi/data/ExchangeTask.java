@@ -2,7 +2,6 @@ package com.example.fenix.privatbankapi.data;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -22,31 +21,33 @@ import java.util.LinkedList;
 /**
  * Created by fenix on 18.08.2015.
  */
-public class CurrentExchangeTask extends AsyncTaskLoader<LinkedList<CurrentExchangeData>> {
+public class ExchangeTask extends AsyncTaskLoader<ExchangePerDate> {
 
     private final static String TEST = "exchangeTask";
-    private static final  String BASE_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
+    //01.12.2014
+    private static final  String BASE_URL = "https://api.privatbank.ua/p24api/exchange_rates?json&date=";
+    private String mUrl;
 
-    public CurrentExchangeTask(Context context) {
+
+    public ExchangeTask(Context context,String s) {
         super(context);
+        mUrl=BASE_URL+s;
     }
 
-
     @Override
-    public LinkedList<CurrentExchangeData> loadInBackground() {
-        LinkedList<CurrentExchangeData> result=null;
-        String response = new CurrencyClient().getCurencyData(BASE_URL);
+    public ExchangePerDate loadInBackground() {
+        ExchangePerDate result=null;
+        String response = new CurrencyClient().getCurencyData(mUrl);
         if(response==null){
             return null;
         }
         try {
-           result = new CurrencyExchangeParser().getCurencyData(response);
+            result = new CurrencyExchangeParser().getCurencyData(response);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return result;
     }
-
 
     class CurrencyClient {
 
@@ -59,6 +60,7 @@ public class CurrentExchangeTask extends AsyncTaskLoader<LinkedList<CurrentExcha
                 url = new URL(urlString);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                Log.d(TEST,url.toString());
 
 
                 // Get the server response
@@ -70,7 +72,9 @@ public class CurrentExchangeTask extends AsyncTaskLoader<LinkedList<CurrentExcha
                 while ((line = reader.readLine()) != null) {
                     sb.append(line + "");
                 }
+
                 return sb.toString();
+
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -85,25 +89,26 @@ public class CurrentExchangeTask extends AsyncTaskLoader<LinkedList<CurrentExcha
 
     class CurrencyExchangeParser {
 
-        public LinkedList<CurrentExchangeData> getCurencyData(String s) throws JSONException {
-            LinkedList<CurrentExchangeData> dataList = new LinkedList<>();
-            Log.d(TEST, s.toString());
-            JSONArray jsonArray = new JSONArray(s);
+        public ExchangePerDate getCurencyData(String s) throws JSONException {
+            ExchangePerDate exchange;
+            String date;
+            LinkedList<Currency> currencyList = new LinkedList<>();
+            JSONObject jsonObject = new JSONObject(s);
+            date=jsonObject.getString("date");
+            JSONArray jsonArray = jsonObject.getJSONArray("exchangeRate");
 
+            //String baseCurrency, String currency, Double saleRateNB, Double purchaseRateNB, Double saleRate, Double purchaseRate
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-                CurrentExchangeData data = new CurrentExchangeData(
-                        obj.getString("ccy"),
-                        obj.getString("base_ccy"),
-                        obj.getDouble("buy"),
-                        obj.getDouble("sale")
-
-
-
-                );
-                dataList.add(data);
+                currencyList.add(new Currency(
+                        obj.optString("baseCurrency"),
+                        obj.optString("currency"),
+                        obj.optDouble("saleRateNB"),
+                        obj.optDouble("purchaseRateNB"),
+                        obj.optDouble("saleRate"),
+                        obj.optDouble("purchaseRate")));
             }
-            return dataList;
+            return new ExchangePerDate(currencyList,date);
         }
     }
 }

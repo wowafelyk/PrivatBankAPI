@@ -45,23 +45,22 @@ public class Activity1Fragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_activity1, container, false);
         mListView = (ListView)view.findViewById(R.id.listView);
 
+        Bundle bndl = new Bundle();
+        getLoaderManager().initLoader(LOADER_ID, bndl,this).forceLoad();
+
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Bundle bndl = new Bundle();
-        getLoaderManager().initLoader(LOADER_ID, bndl,this).forceLoad();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getTitle().equals("Reload")){
-
             getLoaderManager().restartLoader(LOADER_ID, new Bundle(),this).forceLoad();
-
         }
 
         return super.onOptionsItemSelected(item);

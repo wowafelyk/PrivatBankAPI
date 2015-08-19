@@ -1,5 +1,8 @@
 package com.example.fenix.privatbankapi;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,10 +30,32 @@ public class Activity1 extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        Fragment newFragment;
+        FragmentTransaction transaction;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+            case R.id.action_fragment1:
+
+                newFragment = new Activity1Fragment();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentcontainer1, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                break;
+            case R.id.action_fragment2:
+
+                newFragment = new ExchangeFragment();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentcontainer1, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                break;
+            case R.id.action_fragment3:
+                break;
+
+
         }
 
         return super.onOptionsItemSelected(item);
