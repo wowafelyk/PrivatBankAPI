@@ -1,14 +1,14 @@
 package com.example.fenix.privatbankapi;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Activity1 extends AppCompatActivity {
+public class Activity1 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,15 @@ public class Activity1 extends AppCompatActivity {
 
                 break;
             case R.id.action_fragment3:
+
+                newFragment = new Chart();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentcontainer1, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+
+
                 break;
 
 

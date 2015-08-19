@@ -40,7 +40,6 @@ import java.util.LinkedList;
 public class ExchangeFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<ExchangePerDate> {
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private ListView mListView;
@@ -51,10 +50,7 @@ public class ExchangeFragment extends Fragment implements
     private TextView mDateView;
     private final static String TEST = "fragment2";
 
-
-
     public ExchangeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -67,7 +63,6 @@ public class ExchangeFragment extends Fragment implements
         mMonth = c.get(Calendar.MONTH)+1;
         mDay = c.get(Calendar.DAY_OF_MONTH);
         Log.d(TEST,mDay+"."+mMonth+"."+mYear);
-
     }
 
     @Override
